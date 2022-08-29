@@ -1,0 +1,189 @@
+ public function makePaymentRequest($data = null)
+    {
+
+        foreach (Cart::instance('shopping')->content() as $items) {
+            $destinationFees = Checkout::findOrFail($items->options->checkout_id);
+
+            if ($items->options->coupon) {
+                $activeCoupon = Coupon::where('code', $items->options->coupon)->first();
+                $couponAmount = number_format(Cart::instance('shopping')->total() - $activeCoupon->amount, 2);
+            } else {
+                $couponAmount =  Cart::instance('shopping')->total();
+            }
+        }
+
+        $data = array_filter([
+            "amount" => number_format($couponAmount + $destinationFees->destinations->price, 2) * 100,
+            "reference" => FacadesPaystack::genTranxRef(),
+            "email" => Auth::user()->email,
+            "callback_url" => route('callbackPaystack'),
+            "currency" => "GHS",
+
+        ]);
+
+        $this->setHttpResponse('/transaction/initialize', 'POST', $data);
+
+        return $this;
+    }
+       
+
+       
+        <div class="icons my-auto block flex justify-evenly">
+            <div class="search mr-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+            </div>
+            <div class="account mr-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                  </svg>
+            </div>
+            <div class="wishlist mr-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="26" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                  </svg>
+            </div>
+            <div class="cart">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="28" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+                    <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg>
+            </div>
+        </div>
+        composer require league/flysystem-aws-s3-v3 "~1.0" --update-with-all-dependencies
+      order page - <button wire:click="redirectToGateway" class="btn btn-warning">Pay Momo</button>
+
+                        <div class="mt-4" x-data="{ isActive: false, open: false}">
+                            <!-- active & hover classes 'bg-indigo-100 dark:bg-indigo-600' -->
+                            <a href="/category/Footwears" 
+                                class="flex items-center p-2 transition-colors rounded-md bg-white">
+                                <span class="ml-2 text-sm "> FOOTWEAR </span>
+                            </a>
+                        </div>
+                        
+          public function mount()
+    {
+    $randomNumber = random_int(100000, 999999);
+    dd($randomNumber);
+    }
+
+    
+            <div class="wishlist relative">
+                <a href="/wishlist" class="font-light flex ">
+                    <div class="icon mb-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-heart" viewBox="0 0 16 16">
+                            <path
+                                d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                        </svg>
+                    </div>
+                    <div
+                        class="rounded-full text-center absolute -right-3 -top-1  text-sm   text-white p-1 md:px-2 py-0 bg-red-400 font-bold">
+                        {{ Cart::instance('wishlist')->content()->count() }}</div>
+                </a>
+            </div>
+
+            src=" {{ Storage::disk('s3')->url($product->image1) }} 
+
+            
+                @elseif($product->category == 'Brands')
+                    <div class="category-1 hover:shadow-xl p-2 w-full mt-8 xl:mr-0">
+                        <img src="  " alt="" class="xl:w-48 md:w-60 md:h-60 xl:h-48 w-56 w-56 mx-auto">
+                        <h6 class="text-xs pl-2 text-gray-400">{{ $product->category }}</h6>
+                        <h6 class="text-sm pl-2 text-gray-600">{{ $product->name }}</h6>
+                        <h6><strike class="text-gray-400 pl-2 text-xs">Ghc {{ $product->scrap_price }}</strike></h6>
+                        <h5 class="font-bold text-sm pl-2 ">Ghc {{ $product->price }}</h5>
+                        <div class="mx-auto w-full px-2">
+                            <button class="btn btn-dark w-full mx-auto mb-2 text-sm">Add to Cart</button>
+                        </div>
+                    </div>
+                @elseif($product->category == 'Cosmetics')
+                    <div class="category-1 hover:shadow-xl p-2 w-full mt-8 xl:mr-0">
+                        <img src="  " alt="" class="xl:w-48 md:w-60 md:h-60 xl:h-48 w-56 w-56 mx-auto">
+                        <h6 class="text-xs pl-2 text-gray-400">{{ $product->category }}</h6>
+                        <h6 class="text-sm pl-2 text-gray-600">{{ $product->name }}</h6>
+                        <h6><strike class="text-gray-400 pl-2 text-xs">Ghc {{ $product->scrap_price }}</strike></h6>
+                        <h5 class="font-bold text-sm pl-2 ">Ghc {{ $product->price }}</h5>
+                        <div class="mx-auto w-full px-2">
+                            <button class="btn btn-dark w-full mx-auto mb-2 text-sm">Add to Cart</button>
+                        </div>
+                    </div>
+                @elseif($product->category == 'Footwears')
+                    <div class="category-1 hover:shadow-xl p-2 w-full mt-8 xl:mr-0">
+                        <img src="  " alt="" class="xl:w-48 md:w-60 md:h-60 xl:h-48 w-56 w-56 mx-auto">
+                        <h6 class="text-xs pl-2 text-gray-400">{{ $product->category }}</h6>
+                        <h6 class="text-sm pl-2 text-gray-600">{{ $product->name }}</h6>
+                        <h6><strike class="text-gray-400 pl-2 text-xs">Ghc {{ $product->scrap_price }}</strike></h6>
+                        <h5 class="font-bold text-sm pl-2 ">Ghc {{ $product->price }}</h5>
+                        <div class="mx-auto w-full px-2">
+                            <button class="btn btn-dark w-full mx-auto mb-2 text-sm">Add to Cart</button>
+                        </div>
+                    </div>
+                @elseif($product->category == 'Thrifts')
+                    <div class="category-1 hover:shadow-xl p-2 w-full mt-8 xl:mr-0">
+                        <img src="  " alt="" class="xl:w-48 md:w-60 md:h-60 xl:h-48 w-56 w-56 mx-auto">
+                        <h6 class="text-xs pl-2 text-gray-400">{{ $product->category }}</h6>
+                        <h6 class="text-sm pl-2 text-gray-600">{{ $product->name }}</h6>
+                        <h6><strike class="text-gray-400 pl-2 text-xs">Ghc {{ $product->scrap_price }}</strike></h6>
+                        <h5 class="font-bold text-sm pl-2 ">Ghc {{ $product->price }}</h5>
+                        <div class="mx-auto w-full px-2">
+                            <button class="btn btn-dark w-full mx-auto mb-2 text-sm">Add to Cart</button>
+                        </div>
+                    </div>
+                @endif
+
+
+                
+    <div id="latestProduct" class="my-2 xl:w-11/12 block mx-auto border-t-2 border-black pt-4">
+        <div class="header text-sm">
+            <h5 class="text-md font-bold text-center">LATEST PRODUCTS</h5>
+        </div>
+        <div class="categories grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 justify-between my-3 ">
+            @foreach ($lastest as $product)
+                <div class="category-1 hover:shadow-xl p-2 w-full mt-8 xl:mr-0">
+                    <img src=" {{ Storage::disk('s3')->url($product->image1) }} " alt=""
+                        class="xl:w-48 md:w-60 md:h-60 xl:h-48 w-56 h-48 mx-auto">
+                    <h6 class="text-xs pl-2 text-gray-400">{{ $product->category }}</h6>
+                    <h6 class="text-sm pl-2 text-gray-600">{{ $product->name }}</h6>
+                    <h6><strike class="text-gray-400 pl-2 text-xs">Ghc {{ $product->scrap_price }}</strike></h6>
+                    <h5 class="font-bold text-sm pl-2 ">Ghc {{ $product->price }}</h5>
+                    <div class="mx-auto w-full px-2">
+                        <div class="btnPreview">
+                            <button wire:loading.remove wire:target="productPreview({{ $product->id }})"
+                                class="btn btn-dark w-full mx-auto mb-2 text-sm"
+                                wire:click="productPreview({{ $product->id }})">View product</button>
+                            <a wire:loading wire:target="productPreview({{ $product->id }})"
+                                class="btn btn-dark w-full mx-auto mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    style="margin: auto; background: #1f1f1fbb; display: block; shape-rendering: auto;"
+                                    width="28px" height="28px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                    <circle cx="50" cy="50" fill="none" stroke="#ffff" stroke-width="4" r="27"
+                                        stroke-dasharray="127.23450247038662 44.411500823462205">
+                                        <animateTransform attributeName="transform" type="rotate"
+                                            repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1">
+                                        </animateTransform>
+                                    </circle>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+
+    
+                    @if ($product->category == 'Brands')
+                    @foreach ($products as $product)
+                        @foreach (Cart::instance('shopping')->content() as $items)
+                            @if ($product->id == $items->id)
+                                @if (session()->has($product->image1))
+                                    <div class="text-red-800 text-center pt-5">
+                                        {{ session($product->image1) }}
+                                    </div>
+                                @endif
+                            @endif
+                        @endforeach
+                    @endforeach 
+                    @endif
